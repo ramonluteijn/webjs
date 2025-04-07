@@ -66,7 +66,7 @@ export class Main {
         submitButton.addEventListener("click", (event) => {
             event.preventDefault();
 
-            this.IngredientController.createIngredient(minTimeInput.value, speedInput.value, colorInput.value, structureSelect.value);
+            this.IngredientController.createIngredient(speedInput.value, minTimeInput.value, colorInput.value, structureSelect.value);
         });
 
         document.getElementById("ingredientsColumn").appendChild(form);
@@ -90,6 +90,16 @@ export class Main {
 
     addMachineForm() {
         let form = this.createForm("machineForm");
+
+        let minTimeInput = document.createElement("input");
+        minTimeInput.setAttribute("type", "number");
+        minTimeInput.setAttribute("placeholder", "Minimale mengtijd (ms)");
+        form.appendChild(minTimeInput);
+
+        let speedInput = document.createElement("input");
+        speedInput.setAttribute("type", "number");
+        speedInput.setAttribute("placeholder", "Mengsnelheid");
+        form.appendChild(speedInput);
 
         let submitButton = document.createElement("button");
         submitButton.innerHTML = "Submit machine";

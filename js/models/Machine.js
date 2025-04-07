@@ -29,7 +29,7 @@ export class Machine {
         machineDiv.addEventListener("drop", (event) => {
             event.preventDefault();
             let data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            if (this.bucket.length === 0) {
+            if (this.bucket.length === 0 && this.bucket[0].ingredients.length !== 0) {
                 this.bucket.push(data);
                 this.addBucketToMachine(data);
                 this.updateBucketCount();

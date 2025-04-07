@@ -17,8 +17,8 @@ export class Ingredient {
         ingredientDiv.draggable = true;
         ingredientDiv.id = `ingredient-${Date.now()}`;
         ingredientDiv.innerHTML = `
-            <p>Speed: ${this.speed}</p>
             <p>Time: ${this.time} ms</p>
+            <p>Speed: ${this.speed}</p>
             <p>Structure: ${this.structure}</p>
         `;
 
