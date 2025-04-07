@@ -16,6 +16,9 @@ export class Ingredient {
         ingredientDiv.style.border = "1px solid red";
         ingredientDiv.draggable = true;
         ingredientDiv.id = `ingredient-${Date.now()}`;
+
+        this.getIngredientShape(ingredientDiv, this.structure);
+
         ingredientDiv.innerHTML = `
             <p>Time: ${this.time} ms</p>
             <p>Speed: ${this.speed}</p>
@@ -33,5 +36,20 @@ export class Ingredient {
         });
 
         document.getElementById("ingredientsColumn").appendChild(ingredientDiv);
+    }
+    
+    getIngredientShape(ingredientDiv, structure) {
+        if(structure === "Korrel") {
+            ingredientDiv.style.borderRadius = "50%";
+        }
+        else if(structure === "Grove korrel") {
+            ingredientDiv.style.borderRadius = "25%";
+        }
+        else if(structure === "Glad") {
+            ingredientDiv.style.borderRadius = "0%";
+        }
+        else if(structure === "Slijmerig") {
+            ingredientDiv.style.borderRadius = "10%";
+        }
     }
 }

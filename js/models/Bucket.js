@@ -6,10 +6,12 @@ export class Bucket {
         this.ingredients = [];
         this.bucketId = `bucket-${Date.now()}`;
         this.bucketStyling();
+        this.highestTime = 0;
     }
 
     bucketStyling() {
         let bucketDiv = document.createElement("div");
+        bucketDiv.id = this.bucketId;
         bucketDiv.style.width = "175px";
         bucketDiv.style.height = "175px";
         bucketDiv.style.backgroundColor = "blue";
@@ -30,12 +32,14 @@ export class Bucket {
         bucketDiv.addEventListener("drop", (event) => {
             event.preventDefault();
             let data = JSON.parse(event.dataTransfer.getData("text/plain"));
+            console.log("Dropped data:", data);
             if (this.ingredients.length === 0 || this.ingredients[0].speed === data.speed) {
                 this.ingredients.push(data);
                 if (this.ingredients.length === 1) {
                     this.addIngredientToBucket(data);
                 }
                 if (data.time > this.highestTime) {
+                    console.log(data.time);
                     this.highestTime = data.time;
                     bucketDiv.querySelector("p:nth-child(2)").innerText = `Time: ${this.highestTime}`;
                 }
@@ -50,7 +54,10 @@ export class Bucket {
 
         bucketDiv.addEventListener("dragstart", (event) => {
             event.dataTransfer.setData("text/plain", JSON.stringify({
-                id: this.bucketId
+                id: this.bucketId,
+                highestTime: this.highestTime,
+                structureCounts: this.structureCounts,
+                ingredients: this.ingredients
             }));
         });
 

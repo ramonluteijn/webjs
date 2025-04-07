@@ -1,7 +1,7 @@
 import { IngredientController } from "../controllers/IngredientController.js";
 import { BucketController } from "../controllers/BucketController.js";
 import { MachineController } from "../controllers/MachineController.js";
-import { MixhallController } from "../controllers/MixhallController.js";
+import {MixhallController} from "../controllers/MixhallController.js";
 
 export class Main {
     constructor(MixhallController) {
@@ -92,17 +92,6 @@ export class Main {
 
     addMachineForm() {
         let form = this.createForm("machineForm");
-
-        let minTimeInput = document.createElement("input");
-        minTimeInput.setAttribute("type", "number");
-        minTimeInput.setAttribute("placeholder", "Minimale mengtijd (ms)");
-        form.appendChild(minTimeInput);
-
-        let speedInput = document.createElement("input");
-        speedInput.setAttribute("type", "number");
-        speedInput.setAttribute("placeholder", "Mengsnelheid");
-        form.appendChild(speedInput);
-
         let submitButton = document.createElement("button");
         submitButton.innerHTML = "Submit machine";
         form.appendChild(submitButton);
