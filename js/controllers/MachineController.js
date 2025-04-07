@@ -9,4 +9,8 @@ export class MachineController {
         const machine = new Machine(speed, time);
         this.machines.push(machine);
     }
+
+    getMachines() {
+        return this.machines;
+    }
 }

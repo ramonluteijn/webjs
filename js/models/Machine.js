@@ -10,6 +10,7 @@ export class Machine {
 
     MachineStyling() {
         let machineDiv = document.createElement("div");
+        machineDiv.classList.add(`machine`);
         machineDiv.style.width = "125px";
         machineDiv.style.height = "125px";
         machineDiv.style.backgroundColor = "blue";

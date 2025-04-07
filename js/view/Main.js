@@ -1,9 +1,11 @@
 import { IngredientController } from "../controllers/IngredientController.js";
 import { BucketController } from "../controllers/BucketController.js";
 import { MachineController } from "../controllers/MachineController.js";
+import { MixhallController } from "../controllers/MixhallController.js";
 
 export class Main {
-    constructor() {
+    constructor(MixhallController) {
+        this.mixhallController = MixhallController;
         let main = document.createElement("main");
         main.setAttribute("id", "main");
         main.style.display = "flex";
@@ -108,7 +110,7 @@ export class Main {
         submitButton.addEventListener("click", (event) => {
             event.preventDefault();
 
-            this.MachineController.createMachine();
+            this.mixhallController.createMachine();
         });
 
         document.getElementById("machinesColumn").appendChild(form);
