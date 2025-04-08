@@ -1,7 +1,9 @@
 import { IngredientController } from "../controllers/IngredientController.js";
 import { BucketController } from "../controllers/BucketController.js";
 import { MachineController } from "../controllers/MachineController.js";
+import { WeatherController } from "../controllers/WeatherController.js";
 import {MixhallController} from "../controllers/MixhallController.js";
+import { Weather } from "../apis/Weather.js";
 
 export class Main {
     constructor(MixhallController) {
@@ -19,9 +21,12 @@ export class Main {
         this.IngredientController = new IngredientController();
         this.BucketController = new BucketController();
         this.MachineController = new MachineController();
+        this.WeatherController = new WeatherController();
         this.addIngredientForm();
         this.addBucketForm();
         this.addMachineForm();
+
+        this.addWeatherForm();
     }
 
     createColumn(id, title) {
@@ -116,5 +121,26 @@ export class Main {
         let submitButton = document.createElement("button");
         submitButton.innerHTML = label;
         return submitButton;
+    }
+
+    addWeatherForm() {
+
+        let form = this.createForm("weatherForm");
+
+        let postalCode = this.createFormField("number", "postcode numbers");
+        form.appendChild(postalCode);
+
+        let countryCode = this.createFormField("text", "Country code");
+        form.appendChild(countryCode);
+
+        let submitButton = this.createFormButton("Submit location");
+        form.appendChild(submitButton);
+
+        submitButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            this.WeatherController.getWeatherData(countryCode.value, postalCode.value)
+        });
+
+        document.getElementById("bucketsColumn").appendChild(form);
     }
 }
