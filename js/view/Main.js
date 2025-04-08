@@ -37,18 +37,13 @@ export class Main {
     addIngredientForm() {
         let form = this.createForm("ingredientForm");
 
-        let minTimeInput = document.createElement("input");
-        minTimeInput.setAttribute("type", "number");
-        minTimeInput.setAttribute("placeholder", "Minimale mengtijd (ms)");
+        let minTimeInput = this.createFormField("number", "Minimale mengtijd (ms)");
         form.appendChild(minTimeInput);
 
-        let speedInput = document.createElement("input");
-        speedInput.setAttribute("type", "number");
-        speedInput.setAttribute("placeholder", "Mengsnelheid");
+        let speedInput = this.createFormField("number", "Mengsnelheid");
         form.appendChild(speedInput);
 
-        let colorInput = document.createElement("input");
-        colorInput.setAttribute("type", "color");
+        let colorInput = this.createFormField("color", "Kleur");
         form.appendChild(colorInput);
 
         let structureSelect = document.createElement("select");
@@ -61,13 +56,11 @@ export class Main {
         });
         form.appendChild(structureSelect);
 
-        let submitButton = document.createElement("button");
-        submitButton.innerHTML = "Submit ingredient";
+        let submitButton = this.createFormButton("Submit ingredient");
         form.appendChild(submitButton);
 
         submitButton.addEventListener("click", (event) => {
             event.preventDefault();
-
             this.IngredientController.createIngredient(speedInput.value, minTimeInput.value, colorInput.value, structureSelect.value);
         });
 
@@ -77,8 +70,7 @@ export class Main {
     addBucketForm() {
         let form = this.createForm("bucketForm");
 
-        let submitButton = document.createElement("button");
-        submitButton.innerHTML = "Submit bucket";
+        let submitButton = this.createFormButton("Submit bucket");
         form.appendChild(submitButton);
 
         submitButton.addEventListener("click", (event) => {
@@ -92,8 +84,7 @@ export class Main {
 
     addMachineForm() {
         let form = this.createForm("machineForm");
-        let submitButton = document.createElement("button");
-        submitButton.innerHTML = "Submit machine";
+        let submitButton = this.createFormButton("Submit machine");
         form.appendChild(submitButton);
 
         submitButton.addEventListener("click", (event) => {
@@ -112,5 +103,18 @@ export class Main {
         form.style.flexDirection = "column";
         form.style.width = "100%";
         return form;
+    }
+
+    createFormField(type, placeholder) {
+        let input = document.createElement("input");
+        input.setAttribute("type", type);
+        input.setAttribute("placeholder", placeholder);
+        return input;
+    }
+
+    createFormButton(label) {
+        let submitButton = document.createElement("button");
+        submitButton.innerHTML = label;
+        return submitButton;
     }
 }
