@@ -4,7 +4,7 @@ export class Machine {
         this.speed = speed;
         this.time = time;
         this.machineId = `machine-${Date.now()}`;
-        this.bucket = [];
+        this.bucket = null;
 
         this.MachineStyling();
     }
@@ -21,7 +21,6 @@ export class Machine {
         machineDiv.draggable = true;
         machineDiv.innerHTML = `
             <p style="margin: 0;">Machine</p>
-            <p id="${this.machineId}-bucketCount" style="margin: 0;">${this.bucket.length}</p>
             <p>Speed: ${this.speed}</p>
             <p>Time: ${this.time} ms</p>
         `;
@@ -33,8 +32,8 @@ export class Machine {
         machineDiv.addEventListener("drop", async (event) => {
             event.preventDefault();
             let data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            if (this.bucket.length === 0) {
-                this.bucket.push(data);
+            if (this.bucket === null) {
+                this.bucket = data;
                 await this.addBucketToMachine(data);
                 console.log(data.id);
                 document.getElementById(data.id).remove();
@@ -56,9 +55,10 @@ export class Machine {
         bucketDiv.innerHTML = `
             <p>Speed: ${bucket.speed}</p>
             <p>Time: ${bucket.highestTime} ms</p>
-            <p>Structure: ${bucket.structure}</p>
         `;
         document.getElementById(this.machineId).appendChild(bucketDiv);
+        /// Get Colorthingy after mixing it all here and sending it to the coroutine. The coroutine poops out a color afterwards which is clickable.
+        /// Onclick you can get the color of the paint and select it as the currentlySelected Color which you can then drop.
         await MixCoroutine(bucket.highestTime, bucketDiv);
         this.updateBucketCount();
     }

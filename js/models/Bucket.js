@@ -57,7 +57,8 @@ export class Bucket {
                 id: this.bucketId,
                 highestTime: this.highestTime,
                 structureCounts: this.structureCounts,
-                ingredients: this.ingredients
+                ingredients: this.ingredients,
+                speed: this.ingredients[0].speed
             }));
         });
 

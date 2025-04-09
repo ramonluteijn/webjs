@@ -1,6 +1,6 @@
 export class Weather {
-    name = '';
-    password = '';
+    name = 'avans_luteijn_ramon';
+    password = '4jYmn6fGV0';
 
     constructor() {}
 

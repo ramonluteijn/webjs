@@ -13,7 +13,6 @@ export class WeatherController {
                     console.log(weather.coordinates[0].dates[0].value + " " + weather.parameter);
                 })
         } catch (error) {
-            console.error('Error fetching weather data:', error);
         }
     }
 }

@@ -37,7 +37,7 @@ export class Ingredient {
 
         document.getElementById("ingredientsColumn").appendChild(ingredientDiv);
     }
-    
+
     getIngredientShape(ingredientDiv, structure) {
         if(structure === "Korrel") {
             ingredientDiv.style.borderRadius = "50%";
