@@ -1,6 +1,4 @@
 export class Bucket {
-    highestTime = 0;
-    speed = null;
 
     constructor() {
         this.ingredients = [];

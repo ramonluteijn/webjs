@@ -8,14 +8,21 @@ import { TestingController } from "../controllers/TestingController.js";
 
 export class Main {
     constructor(MixhallController, bucketController, weatherController) {
-        let main = document.createElement("main");
-        main.setAttribute("id", "main");
+        this.createMainElement();
+        this.initializeComponents(MixhallController, bucketController, weatherController);
+    }
+
+    createMainElement() {
+        const main = document.createElement("main");
+        main.id = "main";
         main.className = "flex flex-row w-full p-4 mt-4";
         document.body.appendChild(main);
+    }
 
-
+    initializeComponents(MixhallController, bucketController, weatherController) {
         this.IngredientController = new IngredientController();
         this.testingController = new TestingController();
+
         new Weather(weatherController);
         new Ingredient("ingredientsColumn", this.IngredientController);
         new Bucket("bucketsColumn", bucketController);

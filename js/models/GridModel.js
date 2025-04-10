@@ -1,4 +1,3 @@
-
 export class GridModel {
     constructor() {
         this.color = null;
@@ -25,12 +24,20 @@ export class GridModel {
                 droppedItem.style.width = "100%";
                 droppedItem.style.height = "100%";
                 droppedItem.style.backgroundColor = data.color;
-                droppedItem.innerHTML = `<p>${data.structure}</p>`;
                 cell.appendChild(droppedItem);
             } else {
                 alert("Cell already occupied!");
             }
         });
+
+        if(this.color){
+            let droppedItem = document.createElement("div");
+            droppedItem.style.width = "100%";
+            droppedItem.style.height = "100%";
+            droppedItem.style.backgroundColor = this.color;
+        }
+
+        return cell;
     }
     setColor(color) {
         this.color = color;

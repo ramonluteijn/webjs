@@ -1,13 +1,12 @@
 import { Forms } from "../view/components/forms.js";
+import { MixedColor } from "./MixedColor.js";
 
 export class Machine {
     constructor(speed, time) {
         this.speed = speed;
-        this.time = time;
         this.machineId = `machine-${Date.now()}`;
-        this.bucket = null;
-        this.machineDiv = null;
         this.timeId = `${this.machineId}-time`;
+        this.bucket = null;
         this.MachineStyling();
     }
 
@@ -35,9 +34,9 @@ export class Machine {
                 // Stop pulsating after bucket.highestTime milliseconds
                 setTimeout(() => {
                     this.stopPulsating();
+                    this.mixIngredientsIntoColor();
                     this.bucket = null;
                     document.getElementById(this.timeId).innerText = "Time: No time set";
-                    this.mixIngredientsIntoColor();
                 }, this.bucket.highestTime);
             }
         });
@@ -73,20 +72,28 @@ export class Machine {
         let totalGreen = 0;
         let totalBlue = 0;
 
-        this.bucket.ingredients.forEach(ingredients => {
-            let rgbValues = ingredients.color.match(/\d+/g).map(Number);
+        this.bucket.ingredients.forEach(ingredient => {
+            // Convert hex color to RGB
+            let hex = ingredient.color.replace("#", "");
+            let rgbValues = [
+                parseInt(hex.substring(0, 2), 16), // Red
+                parseInt(hex.substring(2, 4), 16), // Green
+                parseInt(hex.substring(4, 6), 16)  // Blue
+            ];
+
             totalRed += rgbValues[0];
             totalGreen += rgbValues[1];
             totalBlue += rgbValues[2];
         });
 
-        let totalColors = colors.length;
+        let totalColors = this.bucket.ingredients.length;
         let averageRed = Math.floor(totalRed / totalColors);
         let averageGreen = Math.floor(totalGreen / totalColors);
         let averageBlue = Math.floor(totalBlue / totalColors);
 
         let mixedColor = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
-        //Add mixedcolor to testcontroller
+        console.log(mixedColor);
+        new MixedColor(mixedColor);
     }
 
     startPulsating() {
