@@ -43,7 +43,7 @@ export class MixhallController {
         //Increase speed for all machines in both mixhalls
         for (const mixhall of this.mixhalls) {
             for (const machine of mixhall.getMachines()) {
-                machine.removeDebuff(reason);
+                machine.removeDebuff(reason.reason);
             }
         }
     }

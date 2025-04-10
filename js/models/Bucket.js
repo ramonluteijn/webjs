@@ -10,7 +10,7 @@ export class Bucket {
     bucketStyling() {
         let bucketDiv = document.createElement("div");
         bucketDiv.id = this.bucketId;
-        bucketDiv.className = "w-44 h-44 bg-blue-500 border border-red-500 rounded p-2";
+        bucketDiv.className = "w-full h-44 bg-blue-500 border border-red-500 rounded p-2";
         bucketDiv.classList.add("h-auto");
         bucketDiv.draggable = true;
         bucketDiv.innerHTML = `

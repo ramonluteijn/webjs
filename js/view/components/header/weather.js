@@ -5,9 +5,7 @@ export class Weather {
     constructor(WeatherController) {
         this.weatherController = WeatherController;
         this.createWeatherColumn();
-
         let form = Forms.createForm("weatherForm");
-
         let postalCode = Forms.createFormField("number", "Postcode");
         form.appendChild(postalCode);
 
@@ -26,19 +24,25 @@ export class Weather {
             }
         });
 
-        form.className += " p-4 bg-white shadow-md rounded h-24";
-        document.getElementById("weatherColumn").appendChild(form);
+        form.className += " p-4 bg-white shadow-md rounded h-auto";
+        document.getElementById("weatherInfo").appendChild(form);
     }
 
     createWeatherColumn() {
-        Column.createColumn("weatherColumn", "Weather");
+        Column.createColumn("weatherColumn", "Weather").innerHTML="";
         this.addWeatherInfo();
+        document.getElementById("weatherColumn").appendChild(Column.createColumn("debuffColumn", "Debuffs"));
+        document.getElementById("debuffColumn").classList.remove("p-4", "border", "border-gray-300", "rounded")
+        document.getElementById("debuffColumn").classList.add("mt-4", "p-2");
+
     }
 
     addWeatherInfo() {
         const weatherInfo = document.createElement("div");
+        weatherInfo.setAttribute("id", "weatherInfo");
         weatherInfo.className = "mt-2 text-gray-700";
         weatherInfo.innerHTML = `
+            <h2 class="text-lg font-bold">Weather</h2>
             <p id="currentTemperature">Current Temperature: Nothing Retrieved</p>
             <p id="currentCondition">Condition: Nothing Retrieved</p>
         `;
@@ -54,10 +58,8 @@ export class Weather {
                     // Update the weather information displayed
                     document.getElementById("currentTemperature").innerText = `Current Temperature: ${weatherData.temp}°C`;
                     document.getElementById("currentCondition").innerText = `Condition: ${weatherData.weatherState}`;
-
-                    WeatherController.UpdateAllMachines(weatherData);
-
                 }
+                WeatherController.UpdateAllMachines(weatherData);
             })
             .catch(error => {
                 console.error("Error fetching weather data:", error);
