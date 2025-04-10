@@ -11,38 +11,40 @@ export class Ingredient {
     createIngredientForm(elementID) {
         const form = Forms.createForm("ingredientForm");
 
+        // Label and input for minimum time
+        const minTimeLabel = document.createElement("label");
+        minTimeLabel.textContent = "Minimale mengtijd (ms)";
+        form.appendChild(minTimeLabel);
         const minTimeInput = Forms.createFormField("number", "Minimale mengtijd (ms)");
+        minTimeInput.setAttribute("min", "1"); // Set minimum value to 1
+        minTimeInput.setAttribute("required", "true"); // Set field as required
+        minTimeInput.setAttribute("value", "1"); // Set default value to 1
         form.appendChild(minTimeInput);
+
+        // Label and input for speed dropdown
+        const speedLabel = document.createElement("label");
+        speedLabel.textContent = "Select Speed";
+        form.appendChild(speedLabel);
 
         const speedDropdownContainer = document.createElement("div");
         speedDropdownContainer.className = "mb-4";
+        let speedDropdown = Forms.createDropdown( ["Slow", "Medium", "Fast"])
 
-        const speedDropdown = document.createElement("select");
-        speedDropdown.classList.add("mt-2",'border', 'border-gray-400', 'bg-white', 'rounded-md', 'w-full', 'py-2' ,'px-3', 'text-gray-700','focus:outline-none','focus:ring-2', 'focus:ring-blue-500', 'focus:border-blue-500', 'hover:border-gray-500', 'appearance-none', 'pr-8');
-        const speeds = ["Slow", "Medium", "Fast"];
-        speeds.forEach((speed) => {
-            const option = document.createElement("option");
-            option.value = speed;
-            option.textContent = speed;
-            speedDropdown.appendChild(option);
-        });
         speedDropdownContainer.appendChild(speedDropdown);
         form.appendChild(speedDropdownContainer);
 
+        // Label and input for structure dropdown
+        const structureLabel = document.createElement("label");
+        structureLabel.textContent = "Select Structure";
+        form.appendChild(structureLabel);
 
-
-        const structureSelect = document.createElement("select");
-        structureSelect.className = "p-2 mb-4";
-        const structures = ["Korrel", "Grove korrel", "Glad", "Slijmerig"];
-        structureSelect.classList.add("mt-2",'border', 'border-gray-400', 'bg-white', 'rounded-md', 'w-full', 'py-2' ,'px-3', 'text-gray-700','focus:outline-none','focus:ring-2', 'focus:ring-blue-500', 'focus:border-blue-500', 'hover:border-gray-500', 'appearance-none', 'pr-8');
-        structures.forEach(structure => {
-            const option = document.createElement("option");
-            option.value = structure;
-            option.text = structure;
-            structureSelect.appendChild(option);
-        });
+        let structureSelect = Forms.createDropdown( ["Korrel", "Grove korrel", "Glad", "Slijmerig"])
         form.appendChild(structureSelect);
 
+        // Label and input for color
+        const colorLabel = document.createElement("label");
+        colorLabel.textContent = "Select Color";
+        form.appendChild(colorLabel);
         const colorInput = Forms.createFormField("color", "Kleur");
         form.appendChild(colorInput);
 

@@ -13,7 +13,7 @@ function renderDefaultLayout() {
     let body = document.body;
     body.style.margin = "0";
     body.style.padding = "0";
-    body.style.color = "red";
+    body.style.color = "black";
 
     let weatherController = new WeatherController();
     let mixhallController = new MixhallController();

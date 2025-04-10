@@ -7,7 +7,7 @@ export class Weather {
     async getWeatherData(countryCode, zip) {
         const baseUrl = 'https://api.meteomatics.com';
         const time = 'now';
-        const parameters = 't_2m:C,precip_1h:mm';
+        const parameters = 't_2m:C,weather_symbol_1h:idx';
         const postalCode = 'postal_'+countryCode+zip;
         const format = 'json'
         const url = `${baseUrl}/${time}/${parameters}/${postalCode}/${format}`;

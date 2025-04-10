@@ -8,21 +8,21 @@ export class Weather {
 
         let form = Forms.createForm("weatherForm");
 
-        let postalCode = Forms.createFormField("number", "postcode numbers");
+        let postalCode = Forms.createFormField("number", "Postcode");
         form.appendChild(postalCode);
 
-        let countryCode = Forms.createFormField("text", "Country code");
+        let countryCode = Forms.createFormField("text", "Country Code");
         form.appendChild(countryCode);
 
         postalCode.addEventListener("input", () => {
             if (countryCode.value) {
-                WeatherController.getWeatherData(countryCode.value.toUpperCase(), postalCode.value);
+                this.UpdateWeatherInfo(countryCode.value.toUpperCase(), postalCode.value, WeatherController);
             }
         });
 
         countryCode.addEventListener("input", () => {
             if (postalCode.value) {
-                WeatherController.getWeatherData(countryCode.value.toUpperCase(), postalCode.value);
+                this.UpdateWeatherInfo(countryCode.value.toUpperCase(), postalCode.value, WeatherController);
             }
         });
 
@@ -39,9 +39,25 @@ export class Weather {
         const weatherInfo = document.createElement("div");
         weatherInfo.className = "mt-2 text-gray-700";
         weatherInfo.innerHTML = `
-            <p>Current Temperature: 20°C</p>
-            <p>Condition: Sunny</p>
+            <p id="currentTemperature">Current Temperature: Nothing Retrieved</p>
+            <p id="currentCondition">Condition: Nothing Retrieved</p>
         `;
         document.getElementById("weatherColumn").appendChild(weatherInfo);
+    }
+
+    UpdateWeatherInfo(countryCode, postalCode, WeatherController) {
+        // Await the asynchronous call to getWeatherData
+        WeatherController.getWeatherData(countryCode, postalCode)
+            .then(weatherData => {
+                // Use the returned weatherData to update the UI
+                if (weatherData) {
+                    // Update the weather information displayed
+                    document.getElementById("currentTemperature").innerText = `Current Temperature: ${weatherData.temp}°C`;
+                    document.getElementById("currentCondition").innerText = `Condition: ${weatherData.weatherState}`;
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching weather data:", error);
+            });
     }
 }

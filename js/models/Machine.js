@@ -1,3 +1,4 @@
+import { Forms } from "../view/components/forms.js";
 
 export class Machine {
     constructor(speed, time) {
@@ -5,111 +6,109 @@ export class Machine {
         this.time = time;
         this.machineId = `machine-${Date.now()}`;
         this.bucket = null;
-
+        this.machineDiv = null;
+        this.timeId = `${this.machineId}-time`;
         this.MachineStyling();
     }
 
     MachineStyling() {
-        let machineDiv = document.createElement("div");
-        machineDiv.classList.add("machine");
-        machineDiv.id = this.machineId;
-        machineDiv.style.width = "125px";
-        machineDiv.style.height = "125px";
-        machineDiv.style.backgroundColor = "blue";
-        machineDiv.style.border = "1px solid red";
-        machineDiv.style.position = "relative";
-        machineDiv.draggable = true;
-        machineDiv.innerHTML = `
+        this.machineDiv = document.createElement("div");
+        this.machineDiv.classList.add("machine",'w-full', "h-44", "bg-blue-500", "border" ,"border-red-500", "rounded", "p-2", "relative", "text-white", "flex", "flex-row", "justify-between");
+        this.machineDiv.id = this.machineId;
+        this.machineDiv.style.height = "125px";
+        this.machineDiv.draggable = true;
+
+        let textDiv = document.createElement("div");
+        textDiv.innerHTML = `
             <p style="margin: 0;">Machine</p>
-            <p>Speed: ${this.speed}</p>
-            <p>Time: ${this.time} ms</p>
+            <p id="speed">Speed: ${this.speed}</p>
+            <p id="${this.timeId}">Time: No time set</p>
         `;
 
-        machineDiv.addEventListener("dragover", (event) => {
+        const actionButton = Forms.createFormButton("Action");
+        actionButton.addEventListener("click",  (event) => {
+            event.preventDefault();
+            if(this.bucket === null) {
+                alert("No bucket assigned");
+            } else{
+                this.startPulsating();
+                // Stop pulsating after bucket.highestTime milliseconds
+                setTimeout(() => {
+                    this.stopPulsating();
+                    this.bucket = null;
+                    document.getElementById(this.timeId).innerText = "Time: No time set";
+                    this.mixIngredientsIntoColor();
+                }, this.bucket.highestTime);
+            }
+        });
+
+        this.machineDiv.addEventListener("dragover", (event) => {
             event.preventDefault();
         });
 
-        machineDiv.addEventListener("drop", async (event) => {
+        this.machineDiv.addEventListener("drop", async (event) => {
             event.preventDefault();
             let data = JSON.parse(event.dataTransfer.getData("text/plain"));
             if (this.bucket === null) {
-                this.bucket = data;
-                await this.addBucketToMachine(data);
-                console.log(data.id);
-                document.getElementById(data.id).remove();
+                if(data.id.includes("bucket")) {
+                    this.bucket = data;
+                    document.getElementById(this.timeId).innerText = `Time: ${data.highestTime}ms`;
 
+                    document.getElementById(data.id).remove();
+                } else{
+                    alert("Dropped item is not a bucket");
+                }
             } else {
                 alert("Bucket already exists");
             }
         });
 
-        document.getElementById("machinesColumn").appendChild(machineDiv);
+        document.getElementById("machinesColumn").appendChild(this.machineDiv);
+        this.machineDiv.appendChild(textDiv);
+        this.machineDiv.appendChild(actionButton)
     }
 
-    async addBucketToMachine(bucket) {
-        let bucketDiv = document.createElement("div");
-        bucketDiv.style.width = "125px";
-        bucketDiv.style.height = "125px";
-        bucketDiv.style.backgroundColor = bucket.color;
-        bucketDiv.style.border = "1px solid red";
-        bucketDiv.innerHTML = `
-            <p>Speed: ${bucket.speed}</p>
-            <p>Time: ${bucket.highestTime} ms</p>
-        `;
-        document.getElementById(this.machineId).appendChild(bucketDiv);
-        /// Get Colorthingy after mixing it all here and sending it to the coroutine. The coroutine poops out a color afterwards which is clickable.
-        /// Onclick you can get the color of the paint and select it as the currentlySelected Color which you can then drop.
-        await MixCoroutine(bucket.highestTime, bucketDiv);
-        this.updateBucketCount();
+    mixIngredientsIntoColor() {
+        let totalRed = 0;
+        let totalGreen = 0;
+        let totalBlue = 0;
+
+        this.bucket.ingredients.forEach(ingredients => {
+            let rgbValues = ingredients.color.match(/\d+/g).map(Number);
+            totalRed += rgbValues[0];
+            totalGreen += rgbValues[1];
+            totalBlue += rgbValues[2];
+        });
+
+        let totalColors = colors.length;
+        let averageRed = Math.floor(totalRed / totalColors);
+        let averageGreen = Math.floor(totalGreen / totalColors);
+        let averageBlue = Math.floor(totalBlue / totalColors);
+
+        let mixedColor = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+        //Add mixedcolor to testcontroller
     }
 
-    updateBucketCount() {
-        let bucketCount = document.getElementById(`${this.machineId}-bucketCount`);
-        bucketCount.innerHTML = `Buckets: ${this.bucket.length}`;
+    startPulsating() {
+        this.machineDiv.classList.add("pulsate");
     }
 
+    stopPulsating() {
+        this.machineDiv.classList.remove("pulsate");
+    }
 }
 
-async function MixCoroutine(waitTime, bucketDiv) {
-    // Start playing animation
-    let isWaiting = true;
-    let currWaitTime = waitTime;
-    let direction = 1; // 1 for right, -1 for left
-    bucketDiv.style.border = '1px solid red';
-    bucketDiv.style.position = 'absolute';
-    bucketDiv.style.top = '0';
-    bucketDiv.style.left = '0';
-
-    let waitAnimationSpeed = 10;
-    bucketDiv.style.transition = currWaitTime + 's';
-
-    while (isWaiting) {
-        console.log(`Waiting ${waitTime} ms`);
-        currWaitTime -= waitAnimationSpeed; // Decrement by 100ms or any suitable value
-        await new Promise(resolve => setTimeout(resolve, waitAnimationSpeed)); // Wait for 100ms
-
-        // Move bucketDiv left and right
-        if (direction === 1) {
-            bucketDiv.style.transition = currWaitTime + 's';
-            bucketDiv.style.left = '100px';
-            direction = -1;
-        } else {
-            bucketDiv.style.transition = currWaitTime + 's';
-            bucketDiv.style.left = '0px';
-            direction = 1;
-        }
-
-        if (currWaitTime <= 0) {
-            isWaiting = false;
-        }
+// Add CSS for pulsating effect
+const style = document.createElement('style');
+style.innerHTML = `
+    .pulsate {
+        animation: pulsate 1s infinite;
     }
 
-    bucketDiv.style.left = '100px';
-
-    if (currWaitTime <= 0) {
-        bucketDiv.style.border = '1px solid green';
+    @keyframes pulsate {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
     }
-
-    // Stop playing animation
-    // Add to Finished ingredients list
-}
+`;
+document.head.appendChild(style);
