@@ -1,12 +1,13 @@
 import { Machine } from '../models/Machine.js';
+import { MixhallController } from "./MixhallController.js";
 
 export class MachineController {
     constructor() {
         this.machines = [];
     }
 
-    createMachine(speed, time) {
-        const machine = new Machine(speed, time);
+    createMachine(speed, time, MixhallController) {
+        const machine = new Machine(speed, time, MixhallController);
         this.machines.push(machine);
     }
 

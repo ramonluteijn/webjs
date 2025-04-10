@@ -4,6 +4,7 @@ export class MixhallController {
     constructor() {
         this.mixhalls = [];
         this.mixhall = null;
+        this.oneMachineRunning = false;
     }
 
     createMixhall(name) {
@@ -12,7 +13,7 @@ export class MixhallController {
     }
 
     createMachine(speed, time) {
-        this.mixhall.machines.createMachine(speed,time);
+        this.mixhall.machines.createMachine(speed,time, this);
     }
 
     getMachinesFromMixhall(mixhallName) {
@@ -27,5 +28,40 @@ export class MixhallController {
 
     updateCurrentMixhallName(mixhallName) {
         this.mixhall = this.mixhalls.find(m => m.name === mixhallName);
+    }
+
+    lowerSpeedByPercentage(reason){
+        //Lower speed for all machines in both mixhalls
+        for (const mixhall of this.mixhalls) {
+            for (const machine of mixhall.getMachines()) {
+                machine.addDebuff(reason);
+            }
+        }
+    }
+
+    increaseSpeedByPercentage(reason){
+        //Increase speed for all machines in both mixhalls
+        for (const mixhall of this.mixhalls) {
+            for (const machine of mixhall.getMachines()) {
+                machine.removeDebuff(reason);
+            }
+        }
+    }
+
+    allowOnlyOneMachineRunning(){
+        this.oneMachineRunning = !!this.oneMachineRunning;
+    }
+    machineIsAllowedToRun(){
+        if(this.oneMachineRunning) {
+            for (const mixhall of this.mixhalls) {
+                for (const machine of mixhall.getMachines()) {
+                    if(machine.isRunning) {
+                        alert ("Only one machine can run at a time, because its above 35 celsius");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

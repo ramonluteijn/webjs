@@ -54,6 +54,9 @@ export class Weather {
                     // Update the weather information displayed
                     document.getElementById("currentTemperature").innerText = `Current Temperature: ${weatherData.temp}°C`;
                     document.getElementById("currentCondition").innerText = `Condition: ${weatherData.weatherState}`;
+
+                    WeatherController.UpdateAllMachines(weatherData);
+
                 }
             })
             .catch(error => {

@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupApp() {
     document.body.style.cssText = "margin: 0; padding: 0; color: black";
 
-    const weatherController = new WeatherController();
     const mixhallController = new MixhallController();
+    const weatherController = new WeatherController(mixhallController);
+
     const bucketController = new BucketController();
 
     new Header(mixhallController);

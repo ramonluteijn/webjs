@@ -2,12 +2,17 @@ import { Forms } from "../view/components/forms.js";
 import { MixedColor } from "./MixedColor.js";
 
 export class Machine {
-    constructor(speed, time) {
+    constructor(speed, time, mixhallController) {
         this.speed = speed;
         this.machineId = `machine-${Date.now()}`;
         this.timeId = `${this.machineId}-time`;
         this.bucket = null;
         this.MachineStyling();
+        this.mixhallController = mixhallController;
+        this.isRunning = false;
+
+        this.originalTime = null;
+        this.debuffs = { };
     }
 
     MachineStyling() {
@@ -18,6 +23,7 @@ export class Machine {
         this.machineDiv.draggable = true;
 
         let textDiv = document.createElement("div");
+        textDiv.setAttribute("id", `${this.machineId}-text`);
         textDiv.innerHTML = `
             <p style="margin: 0;">Machine</p>
             <p id="speed">Speed: ${this.speed}</p>
@@ -30,14 +36,20 @@ export class Machine {
             if(this.bucket === null) {
                 alert("No bucket assigned");
             } else{
-                this.startPulsating();
-                // Stop pulsating after bucket.highestTime milliseconds
-                setTimeout(() => {
-                    this.stopPulsating();
-                    this.mixIngredientsIntoColor();
-                    this.bucket = null;
-                    document.getElementById(this.timeId).innerText = "Time: No time set";
-                }, this.bucket.highestTime);
+                if(this.mixhallController.machineIsAllowedToRun()){
+                    this.startPulsating();
+                    this.isRunning = true;
+
+                    // Stop pulsating after bucket.highestTime milliseconds
+                    setTimeout(() => {
+                        this.stopPulsating();
+                        this.mixIngredientsIntoColor();
+                        this.bucket = null;
+                        this.isRunning = false;
+                        this.originalTime = null;
+                        document.getElementById(this.timeId).innerText = "Time: No time set";
+                    }, this.bucket.highestTime);
+                }
             }
         });
 
@@ -51,6 +63,7 @@ export class Machine {
             if (this.bucket === null) {
                 if(data.id.includes("bucket")) {
                     this.bucket = data;
+                    this.originalTime = data.highestTime;
                     document.getElementById(this.timeId).innerText = `Time: ${data.highestTime}ms`;
 
                     document.getElementById(data.id).remove();
@@ -103,6 +116,59 @@ export class Machine {
     stopPulsating() {
         this.machineDiv.classList.remove("pulsate");
     }
+
+    addDebuff(debuff) {
+        if (!this.debuffs[debuff.reason]) {
+            this.debuffs[debuff.reason] = debuff;
+
+            if (this.bucket) {
+                this.bucket.highestTime = this.originalTime * (1 + (debuff.percentage / 100));
+            }
+
+            let timeDiv = document.getElementById(this.timeId);
+            if (this.bucket) {
+                timeDiv.innerText = `Time: ${this.bucket.highestTime}ms`;
+            } else {
+                timeDiv.innerText = "Time: No bucket assigned";
+            }
+
+            // Check if a debuffDiv with the same id already exists
+            let debuffDivId = this.machineId + debuff.reason;
+            if (!document.getElementById(debuffDivId)) {
+                let debuffDiv = document.createElement("div");
+                debuffDiv.setAttribute("id", debuffDivId);
+                debuffDiv.innerText = `${debuff.reason} - ${debuff.percentage}%`;
+                let textDiv = document.getElementById(`${this.machineId}-text`);
+                textDiv.appendChild(debuffDiv);
+            }
+        }
+    }
+
+    removeDebuff(reason) {
+        //Get the percentage out of the debuffs
+        let percentage = this.debuffs[reason].percentage;
+        //Remove the debuff from the dictionary
+        delete this.debuffs[reason];
+        //Remove the debuff from the div
+        let debuffDivId = this.machineId + reason;
+        let debuffDiv = document.getElementById(debuffDivId);
+        if (debuffDiv) {
+            this.machineDiv.removeChild(debuffDiv);
+        }
+        //Decrease the time by percentage
+        if (this.bucket) {
+            this.bucket.highestTime = this.originalTime * (1 - (percentage / 100));
+        }
+        //Update the time
+        let timeDiv = document.getElementById(this.timeId);
+        if (this.bucket) {
+            timeDiv.innerText = `Time: ${this.bucket.highestTime}ms`;
+        } else {
+            timeDiv.innerText = "Time: No bucket assigned";
+        }
+
+    }
+
 }
 
 // Add CSS for pulsating effect

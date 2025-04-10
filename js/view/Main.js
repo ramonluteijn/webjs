@@ -23,7 +23,7 @@ export class Main {
         this.IngredientController = new IngredientController();
         this.testingController = new TestingController();
 
-        new Weather(weatherController);
+        new Weather(weatherController, MixhallController);
         new Ingredient("ingredientsColumn", this.IngredientController);
         new Bucket("bucketsColumn", bucketController);
         new Machine("machinesColumn", MixhallController);
