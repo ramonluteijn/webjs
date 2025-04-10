@@ -19,7 +19,8 @@ export class WeatherController {
     UpdateAllMachines(weatherData) {
         const reasons = {
             snowRain: { reason: "It is raining/Snowing", percentage: 10 },
-            below10C: { reason: "It is below 10 celsius", percentage: 15 }
+            below10C: { reason: "It is below 10 celsius", percentage: 15 },
+            above35c: { reason: "It is above 35 celsius, only 1 machine can be used", percentage: 0 }
         };
 
         if (weatherData) {
@@ -55,23 +56,25 @@ export class WeatherController {
         } else if (this.isBelow10Celsius) {
             this.isBelow10Celsius = false;
             this.removeReasonFromScreen(reasons.below10C);
-            this.mixhallController.increaseSpeedByPercentage(reasons.below10C.reason);
+            this.mixhallController.removeAlldebuffs(reasons.below10C.reason);
         }
 
         if (weatherData.temp > 35) {
             this.isAbove35Celsius = true;
+            this.addReasonToScreen(reasons.above35c);
             this.mixhallController.allowOnlyOneMachineRunning();
+
         } else if (this.isAbove35Celsius) {
             this.isAbove35Celsius = false;
-            this.mixhallController.allowOnlyOneMachineRunning();
+            this.removeReasonFromScreen(reasons.above35c);
+            this.mixhallController.removeAlldebuffs();
         }
     }
 
     restoreMachineState(reasons) {
         this.removeReasonFromScreen(reasons.snowRain);
         this.removeReasonFromScreen(reasons.below10C);
-        this.mixhallController.increaseSpeedByPercentage(reasons.snowRain.reason);
-        this.mixhallController.increaseSpeedByPercentage(reasons.below10C.reason);
+        this.mixhallController.removeAlldebuffs();
     }
 
     addReasonToScreen(reason) {

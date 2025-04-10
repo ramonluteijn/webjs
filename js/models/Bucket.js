@@ -29,6 +29,7 @@ export class Bucket {
             let data = JSON.parse(event.dataTransfer.getData("text/plain"));
             if(this.speed == null || data.speed === this.speed){
                 this.addIngredientToBucket(data);
+                document.getElementById(data.id).remove();
             }
             else {
                 alert("Ingredient speed does not match bucket speed");

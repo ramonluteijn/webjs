@@ -12,17 +12,13 @@ export class Weather {
         let countryCode = Forms.createFormField("text", "Country Code");
         form.appendChild(countryCode);
 
-        postalCode.addEventListener("input", () => {
-            if (countryCode.value) {
-                this.UpdateWeatherInfo(countryCode.value.toUpperCase(), postalCode.value, WeatherController);
-            }
-        });
+        let formButton = Forms.createFormButton("Submit");
+        formButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            this.UpdateWeatherInfo(countryCode.value.toUpperCase(), postalCode.value, WeatherController);
+        })
+        form.appendChild(formButton);
 
-        countryCode.addEventListener("input", () => {
-            if (postalCode.value) {
-                this.UpdateWeatherInfo(countryCode.value.toUpperCase(), postalCode.value, WeatherController);
-            }
-        });
 
         form.className += " p-4 bg-white shadow-md rounded h-auto";
         document.getElementById("weatherInfo").appendChild(form);

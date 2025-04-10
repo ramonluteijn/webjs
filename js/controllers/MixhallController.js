@@ -39,17 +39,18 @@ export class MixhallController {
         }
     }
 
-    increaseSpeedByPercentage(reason){
+    removeAlldebuffs(){
         //Increase speed for all machines in both mixhalls
         for (const mixhall of this.mixhalls) {
             for (const machine of mixhall.getMachines()) {
-                machine.removeDebuff(reason.reason);
+                machine.removeAllDebuffs();
             }
         }
+        this.oneMachineRunning = false;
     }
 
     allowOnlyOneMachineRunning(){
-        this.oneMachineRunning = !!this.oneMachineRunning;
+        this.oneMachineRunning = true;
     }
     machineIsAllowedToRun(){
         if(this.oneMachineRunning) {

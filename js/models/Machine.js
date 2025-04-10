@@ -22,6 +22,8 @@ export class Machine {
         this.machineDiv.style.height = "125px";
         this.machineDiv.draggable = true;
 
+
+
         const textDiv = document.createElement("div");
         textDiv.setAttribute("id", `${this.machineId}-text`);
         textDiv.innerHTML = `
@@ -29,6 +31,8 @@ export class Machine {
             <p id="speed">Speed: ${this.speed}</p>
             <p id="${this.timeId}">Time: No time set</p>
         `;
+
+
 
         const actionButton = Forms.createFormButton("Action");
         actionButton.addEventListener("click",  (event) => {
@@ -65,8 +69,8 @@ export class Machine {
                     this.bucket = data;
                     this.originalTime = data.highestTime;
                     document.getElementById(this.timeId).innerText = `Time: ${data.highestTime}ms`;
-
                     document.getElementById(data.id).remove();
+                    this.mixhallController.weatherController
                 } else{
                     alert("Dropped item is not a bucket");
                 }
@@ -78,6 +82,18 @@ export class Machine {
         document.getElementById("machinesColumn").appendChild(this.machineDiv);
         this.machineDiv.appendChild(textDiv);
         this.machineDiv.appendChild(actionButton)
+
+        if(this.isRunning)
+        {
+            this.startPulsating();
+        }
+
+        let timeDiv = document.getElementById(this.timeId);
+        if (this.bucket) {
+            timeDiv.innerText = `Time: ${this.bucket.highestTime}ms`;
+        } else {
+            timeDiv.innerText = "Time: No bucket assigned";
+        }
     }
 
     mixIngredientsIntoColor() {
@@ -135,17 +151,16 @@ export class Machine {
         }
     }
 
+    removeAllDebuffs() {
+        // Clear all debuffs
+        this.debuffs = {};
 
-    removeDebuff(reason) {
-        //Get the percentage out of the debuffs
-        let percentage = this.debuffs[reason].percentage;
-        //Remove the debuff from the dictionary
-        delete this.debuffs[reason];
-        //Decrease the time by percentage
+        // Reset the time to the original time if a bucket is assigned
         if (this.bucket) {
-            this.bucket.highestTime = this.originalTime * (1 - (percentage / 100));
+            this.bucket.highestTime = this.originalTime;
         }
-        //Update the time
+
+        // Update the time display
         let timeDiv = document.getElementById(this.timeId);
         if (this.bucket) {
             timeDiv.innerText = `Time: ${this.bucket.highestTime}ms`;
