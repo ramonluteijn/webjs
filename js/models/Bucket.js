@@ -27,7 +27,7 @@ export class Bucket {
         bucketDiv.addEventListener("drop", (event) => {
             event.preventDefault();
             let data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            if(this.speed == null || data.speed === this.speed){
+            if (!data.id.includes("bucket") && (this.speed == null || data.speed === this.speed)) {
                 this.addIngredientToBucket(data);
                 document.getElementById(data.id).remove();
             }
