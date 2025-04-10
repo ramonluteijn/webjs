@@ -2,10 +2,8 @@ export class Column {
     static createColumn(id, title) {
         let column = document.createElement("div");
         column.setAttribute("id", id);
-        column.style.flex = "1";
-        column.style.padding = "10px";
-        column.style.border = "1px solid black";
-        column.innerHTML = `<h2>${title}</h2>`;
+        column.className = "flex flex-col w-1/4 p-4 border border-gray-300 rounded";
+        column.innerHTML = `<h2 class="text-lg font-bold">${title}</h2>`;
         document.getElementById("main").appendChild(column);
     }
 }

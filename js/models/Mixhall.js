@@ -1,4 +1,5 @@
 import { MachineController } from '../controllers/MachineController.js';
+
 export class Mixhall {
     constructor(name) {
         this.name = name;
@@ -6,13 +7,13 @@ export class Mixhall {
     }
 
     addMachine(speed, time) {
-        this.machines.createMachine(speed,time);
+        this.machines.createMachine(speed, time);
     }
 
-    getMachineController(){
+    getMachineController() {
         return this.machines;
     }
-    
+
     getMachines() {
         return this.machines.getMachines();
     }

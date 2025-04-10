@@ -15,15 +15,16 @@ export class Mixhall {
         let button = document.createElement("button");
         button.setAttribute("id", `${mixhallName}Button`);
         button.innerHTML = label;
-        button.style.margin = "10px";
+        button.className = "bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 m-2";
         button.addEventListener("click", () => this.loadMachines(mixhallName));
-        parent.appendChild(button);
+        document.getElementById("buttonDiv").appendChild(button);
+        // parent.appendChild(button);
     }
 
     createCurrentMixhallLabel(parent) {
         this.currentMixhallLabel = document.createElement("p");
         this.currentMixhallLabel.setAttribute("id", "currentMixhallLabel");
-        this.currentMixhallLabel.style.margin = "10px";
+        this.currentMixhallLabel.className = "m-2";
         this.currentMixhallLabel.innerHTML = "Current Mixhall: None";
         parent.appendChild(this.currentMixhallLabel);
     }

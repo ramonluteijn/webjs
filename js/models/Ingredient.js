@@ -10,20 +10,24 @@ export class Ingredient {
 
     IngredientStyling() {
         let ingredientDiv = document.createElement("div");
-        ingredientDiv.style.width = "125px";
-        ingredientDiv.style.height = "125px";
-        ingredientDiv.style.backgroundColor = this.color;
-        ingredientDiv.style.border = "1px solid red";
+        ingredientDiv.className = "flex items-center w-full p-2 border border-gray-300 rounded mb-2";
         ingredientDiv.draggable = true;
         ingredientDiv.id = `ingredient-${Date.now()}`;
 
-        this.getIngredientShape(ingredientDiv, this.structure);
+        let shapeDiv = document.createElement("div");
+        shapeDiv.style.backgroundColor = this.color;
+        shapeDiv.className = "w-16 h-16 rounded-l";
+        this.getIngredientShape(shapeDiv, this.structure);
+        ingredientDiv.appendChild(shapeDiv);
 
-        ingredientDiv.innerHTML = `
-            <p>Time: ${this.time} ms</p>
-            <p>Speed: ${this.speed}</p>
-            <p>Structure: ${this.structure}</p>
+        let infoDiv = document.createElement("div");
+        infoDiv.className = "flex flex-col justify-center pl-4";
+        infoDiv.innerHTML = `
+            <p class="text-sm">Time: ${this.time} ms</p>
+            <p class="text-sm">Speed: ${this.speed}</p>
+            <p class="text-sm">Structure: ${this.structure}</p>
         `;
+        ingredientDiv.appendChild(infoDiv);
 
         ingredientDiv.addEventListener("dragstart", (event) => {
             event.dataTransfer.setData("text/plain", JSON.stringify({
@@ -38,18 +42,15 @@ export class Ingredient {
         document.getElementById("ingredientsColumn").appendChild(ingredientDiv);
     }
 
-    getIngredientShape(ingredientDiv, structure) {
-        if(structure === "Korrel") {
-            ingredientDiv.style.borderRadius = "50%";
-        }
-        else if(structure === "Grove korrel") {
-            ingredientDiv.style.borderRadius = "25%";
-        }
-        else if(structure === "Glad") {
-            ingredientDiv.style.borderRadius = "0%";
-        }
-        else if(structure === "Slijmerig") {
-            ingredientDiv.style.borderRadius = "10%";
+    getIngredientShape(shapeDiv, structure) {
+        if (structure === "Korrel") {
+            shapeDiv.style.borderRadius = "50%";
+        } else if (structure === "Grove korrel") {
+            shapeDiv.style.borderRadius = "25%";
+        } else if (structure === "Glad") {
+            shapeDiv.style.borderRadius = "0%";
+        } else if (structure === "Slijmerig") {
+            shapeDiv.style.borderRadius = "10%";
         }
     }
 }
