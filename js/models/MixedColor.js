@@ -18,7 +18,14 @@ export class MixedColor{
                 color: this.color
             }));
         });
-        document.getElementById("colorsColumn").appendChild(colorElement);
+
+        let colorOptionDiv = document.createElement("div");
+        colorOptionDiv.style.width = "100%";
+        colorOptionDiv.id = "colorOptionDiv";
+        colorOptionDiv.classList.add("flex", "flex-row", "gap-2", "flex-wrap");
+
+        document.getElementById("colorsColumn").appendChild(colorOptionDiv);
+        document.getElementById(colorOptionDiv.id).appendChild(colorElement);
 
     }
 }

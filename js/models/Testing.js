@@ -13,6 +13,7 @@ export class Testing {
         gridContainer.style.gridTemplateColumns = `repeat(${this.width}, 1fr)`;
         gridContainer.style.gridTemplateRows = `repeat(${this.length}, 1fr)`;
         gridContainer.style.gap = "5px";
+        gridContainer.style.overflowX = "hidden";
 
         // Loop through the gridArray to create tiles
         for (let i = 0; i < this.length; i++) {
@@ -28,7 +29,7 @@ export class Testing {
             // Create a new column for the grid if it doesn't exist
             existingGridColumn = document.createElement("div");
             existingGridColumn.setAttribute("id", "gridContainer");
-            existingGridColumn.className = "flex flex-col w-1/4 p-4 border border-gray-300 rounded"; // Add your desired styles
+            existingGridColumn.className = "flex flex-col w-full p-4 border border-gray-300 rounded"; // Add your desired styles
             existingGridColumn.innerHTML = "<h2 class='text-lg font-bold'>Grid</h2>"; // Add a title for the grid column
             document.getElementById("testingColumn").appendChild(existingGridColumn); // Append to the main section
         } else {
