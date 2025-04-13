@@ -8,6 +8,7 @@ export class Ingredient {
         this.IngredientStyling();
     }
 
+    // initialize the ingredient with styling and event listeners
     IngredientStyling() {
         let ingredientDiv = document.createElement("div");
         ingredientDiv.className = "flex items-center w-full p-2 border border-gray-300 rounded mb-2";
@@ -42,6 +43,7 @@ export class Ingredient {
         document.getElementById("ingredientsColumn").appendChild(ingredientDiv);
     }
 
+    // get the shape of the ingredient based on its structure
     getIngredientShape(shapeDiv, structure) {
         if (structure === "Korrel") {
             shapeDiv.style.borderRadius = "50%";

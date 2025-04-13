@@ -4,8 +4,8 @@ export class MixedColor{
         this.initializeColor();
     }
 
+    // initialize the color element
     initializeColor(){
-        //Set width and height of the color in html
         let colorElement = document.createElement("div");
         colorElement.style.width = "50px";
         colorElement.style.height = "50px";

@@ -22,8 +22,6 @@ export class Machine {
         this.machineDiv.style.height = "125px";
         this.machineDiv.draggable = true;
 
-
-
         const textDiv = document.createElement("div");
         textDiv.setAttribute("id", `${this.machineId}-text`);
         textDiv.innerHTML = `
@@ -31,8 +29,6 @@ export class Machine {
             <p id="speed">Speed: ${this.speed}</p>
             <p id="${this.timeId}">Time: No time set</p>
         `;
-
-
 
         const actionButton = Forms.createFormButton("Action");
         actionButton.addEventListener("click",  (event) => {
@@ -96,13 +92,13 @@ export class Machine {
         }
     }
 
+    // Convert hex color to RGB and mix the colors
     mixIngredientsIntoColor() {
         let totalRed = 0;
         let totalGreen = 0;
         let totalBlue = 0;
 
         this.bucket.ingredients.forEach(ingredient => {
-            // Convert hex color to RGB
             let hex = ingredient.color.replace("#", "");
             let rgbValues = [
                 parseInt(hex.substring(0, 2), 16), // Red

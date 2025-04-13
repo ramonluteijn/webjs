@@ -1,5 +1,4 @@
 import { Mixhall } from '../models/Mixhall.js';
-import { Machine } from "../models/Machine.js";
 export class MixhallController {
     constructor() {
         this.mixhalls = [];
@@ -52,6 +51,7 @@ export class MixhallController {
     allowOnlyOneMachineRunning(){
         this.oneMachineRunning = true;
     }
+
     machineIsAllowedToRun(){
         if(this.oneMachineRunning) {
             for (const mixhall of this.mixhalls) {

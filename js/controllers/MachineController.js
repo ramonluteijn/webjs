@@ -1,5 +1,4 @@
 import { Machine } from '../models/Machine.js';
-import { MixhallController } from "./MixhallController.js";
 
 export class MachineController {
     constructor() {

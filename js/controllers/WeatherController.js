@@ -104,8 +104,8 @@ export class WeatherController {
     async getWeatherData(countryCode, zip) {
         try {
             const data = await this.weather.getWeatherData(countryCode, zip);
-            const temp = data.data[0].coordinates[0].dates[0].value;
-            const weatherCode = data.data[1].coordinates[0].dates[0].value;
+            const temp = data.data[0].coordinates[0].dates[0].value; // temperature in Celsius
+            const weatherCode = data.data[1].coordinates[0].dates[0].value; // weather code
 
             return {
                 temp,

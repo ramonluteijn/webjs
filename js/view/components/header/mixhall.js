@@ -18,8 +18,8 @@ export class Mixhall {
         document.getElementById("buttonDiv").appendChild(button);
     }
 
+    //Show machine column
     loadMachines(mixhallName) {
-        //Show machine column
         Header.AppState(mixhallName);
         this.mixhallController.updateCurrentMixhallName(mixhallName);
 

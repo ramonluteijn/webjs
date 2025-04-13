@@ -29,15 +29,13 @@ export class Testing {
             // Create a new column for the grid if it doesn't exist
             existingGridColumn = document.createElement("div");
             existingGridColumn.setAttribute("id", "gridContainer");
-            existingGridColumn.className = "flex flex-col w-full p-4 border border-gray-300 rounded"; // Add your desired styles
-            existingGridColumn.innerHTML = "<h2 class='text-lg font-bold'>Grid</h2>"; // Add a title for the grid column
-            document.getElementById("testingColumn").appendChild(existingGridColumn); // Append to the main section
+            existingGridColumn.className = "flex flex-col w-full p-4 border border-gray-300 rounded";
+            existingGridColumn.innerHTML = "<h2 class='text-lg font-bold'>Grid</h2>";
+            document.getElementById("testingColumn").appendChild(existingGridColumn);
         } else {
             // Clear existing grid tiles in the gridContainer if it already exists
-            existingGridColumn.innerHTML = "<h2 class='text-lg font-bold'>Grid</h2>"; // Reset the title
+            existingGridColumn.innerHTML = "<h2 class='text-lg font-bold'>Grid</h2>";
         }
-
-        // Append the new grid container with the created tiles
         existingGridColumn.appendChild(gridContainer);
     }
 }

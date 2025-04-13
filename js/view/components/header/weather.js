@@ -19,7 +19,6 @@ export class Weather {
         })
         form.appendChild(formButton);
 
-
         form.className += " p-4 bg-white shadow-md rounded h-auto";
         document.getElementById("weatherInfo").appendChild(form);
     }
@@ -30,7 +29,6 @@ export class Weather {
         document.getElementById("weatherColumn").appendChild(Column.createColumn("debuffColumn", "Debuffs"));
         document.getElementById("debuffColumn").classList.remove("p-4", "border", "border-gray-300", "rounded")
         document.getElementById("debuffColumn").classList.add("mt-4", "p-2");
-
     }
 
     addWeatherInfo() {
@@ -51,7 +49,6 @@ export class Weather {
             .then(weatherData => {
                 // Use the returned weatherData to update the UI
                 if (weatherData) {
-                    // Update the weather information displayed
                     document.getElementById("currentTemperature").innerText = `Current Temperature: ${weatherData.temp}°C`;
                     document.getElementById("currentCondition").innerText = `Condition: ${weatherData.weatherState}`;
                 }

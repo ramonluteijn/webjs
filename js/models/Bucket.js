@@ -7,6 +7,7 @@ export class Bucket {
         this.highestTime = 0;
     }
 
+    // initialize the bucket styling and event listeners
     bucketStyling() {
         let bucketDiv = document.createElement("div");
         bucketDiv.id = this.bucketId;
@@ -62,6 +63,7 @@ export class Bucket {
         this.addIngredientShape(ingredient);
     }
 
+    // update the bucket time to the highest time of the ingredients
     updateBucketTimeAndSpeed(ingredient) {
         if (ingredient.time > this.highestTime) {
             this.highestTime = ingredient.time;
@@ -74,6 +76,7 @@ export class Bucket {
         document.querySelector(`#${this.bucketId}-speed`).innerText = `Speed: ${this.speed}`;
     }
 
+    // add the shape of the ingredient to the bucket
     addIngredientShape(ingredient) {
         let ingredientDetailsDiv = document.getElementById(`${this.bucketId}-ingredientDetails`);
         

@@ -13,10 +13,10 @@ export class GridModel {
         cell.style.position = "relative";
 
 
-        // Voeg een klikgebeurtenis toe
+        // add event listener to show color popup
         cell.addEventListener("click", () => {
             const rgbValues = this.color.match(/\d+/g).map(Number);
-            showColorPopup(rgbValues);
+            this.showColorPopup(rgbValues);
         });
 
         // Add dragover event
@@ -49,10 +49,10 @@ export class GridModel {
 
         return cell;
     }
-}
-function showColorPopup(baseColor) {
-    const triadicColors = ColorUtils.getTriadicColors(baseColor);
-    const popupContent = `
+
+    showColorPopup(baseColor) {
+        const triadicColors = ColorUtils.getTriadicColors(baseColor);
+        const popupContent = `
         <div>
             <h3>Triadic Kleuren</h3>
             <div style="background-color: rgb(${triadicColors[0].join(',')}); width: 100px; height: 100px;"></div>
@@ -62,20 +62,20 @@ function showColorPopup(baseColor) {
         </div>
     `;
 
-    // Maak een popup element aan
-    const popup = document.createElement('div');
-    popup.innerHTML = popupContent;
-    popup.style.position = 'absolute';
-    popup.style.backgroundColor = 'white';
-    popup.style.border = '1px solid black';
-    popup.style.padding = '10px';
-    popup.style.zIndex = '1000';
+        // create popup element
+        const popup = document.createElement('div');
+        popup.innerHTML = popupContent;
+        popup.style.position = 'absolute';
+        popup.style.backgroundColor = 'white';
+        popup.style.border = '1px solid black';
+        popup.style.padding = '10px';
+        popup.style.zIndex = '1000';
 
-    // Voeg de popup toe aan de body
-    document.body.appendChild(popup);
+        document.body.appendChild(popup);
 
-    // Sluit de popup na een paar seconden of bij een klik
-    setTimeout(() => {
-        document.body.removeChild(popup);
-    }, 5000); // Popup verdwijnt na 5 seconden
+        // close popup after 5 seconds
+        setTimeout(() => {
+            document.body.removeChild(popup);
+        }, 5000);
+    }
 }
