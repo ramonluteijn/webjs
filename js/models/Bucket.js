@@ -21,6 +21,7 @@ export class Bucket {
             <div id="${this.bucketId}-ingredientDetails" class="flex flex-row"></div>
             <p id="${this.bucketId}-ingredientCount" class="text-white">Ingredients: 0</p>
         `;
+
         bucketDiv.addEventListener("dragover", (event) => {
             event.preventDefault();
         });

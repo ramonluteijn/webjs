@@ -16,8 +16,6 @@ export class Ingredient {
         minTimeLabel.textContent = "Minimale mengtijd (ms)";
         form.appendChild(minTimeLabel);
         const minTimeInput = Forms.createFormField("number", "Minimale mengtijd (ms)");
-        minTimeInput.setAttribute("min", "1");
-        minTimeInput.setAttribute("required", "true");
         minTimeInput.setAttribute("value", "1");
         form.appendChild(minTimeInput);
 

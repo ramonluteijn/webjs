@@ -26,6 +26,5 @@ export class MixedColor{
 
         document.getElementById("colorsColumn").appendChild(colorOptionDiv);
         document.getElementById(colorOptionDiv.id).appendChild(colorElement);
-
     }
 }

@@ -3,8 +3,8 @@ export class ColorUtils {
         console.log(baseColor);
         let hsl = this.rgbToHsl(baseColor[0], baseColor[1], baseColor[2]);
 
-        let color1 = this.hslToRgb((hsl[0] + 120) % 360, hsl[1], hsl[2]); // 120 graden verschuiving
-        let color2 = this.hslToRgb((hsl[0] + 240) % 360, hsl[1], hsl[2]); // 240 graden verschuiving
+        let color1 = this.hslToRgb((hsl[0] + 120) % 360, hsl[1], hsl[2]); // 120 degrees
+        let color2 = this.hslToRgb((hsl[0] + 240) % 360, hsl[1], hsl[2]); // 240 degrees
 
         return [color1, color2];
     }
@@ -15,7 +15,7 @@ export class ColorUtils {
         let h, s, l = (max + min) / 2;
 
         if (max === min) {
-            h = s = 0; // Geen verzadiging
+            h = s = 0; // no saturation
         } else {
             let d = max - min;
             s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
